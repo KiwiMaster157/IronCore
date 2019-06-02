@@ -1,0 +1,29 @@
+This file explains how Objects are formed from Nodes.
+
+1. Objects are consecutive Nodes in the simulation layout.
+   They consist of 5 different parts.
+   a. Callback function.
+      This position doubles as the position of the Object.
+      (1). Function pointer.
+   b. Control block. Fixed size.
+	  Contains metadata about the Object's memory.
+	  (1). Offset of Internals.
+	  (2). Offset of Inputs.
+	  (3). Offset of Outputs.
+	  (4). Total size of Object.
+	  (5). Total size of previous Object.
+   c. Argument block. Variable size.
+      Contains arguments set by the user.
+	  (1..n). Values of Arguments.
+   d. Internal block. Variable size.
+      Contains signals and numbers stored inside the Object.
+	  (1..n). Values of Internals.
+   e. Inputs block. Variable size.
+      Contains the values of signals coming into the Object.
+	  (1..n). Values of Inputs.
+   f. Outputs block. Variable size.
+      Contains pairs of positions (relative to Beginning).
+	  The first is the position of the Object receiving the signal.
+	  The second is the position of the Input receiving the signal.
+
+The specific layout of Objects should ALWAYS be hidden behind an API wall.
