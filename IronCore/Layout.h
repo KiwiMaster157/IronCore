@@ -8,6 +8,8 @@
 namespace iron
 {
 
+class Core;
+
 struct LayoutMember
 {
 	std::string name;
@@ -19,6 +21,7 @@ struct LayoutMember
 struct Pin
 {
 	Point2i position;
+	int internalItem;
 	short width;
 	enum Direction : short
 	{
@@ -28,16 +31,22 @@ struct Pin
 	} direction;
 };
 
-class Layout
+struct LayoutData
 {
-public:
-
-private:
 	std::vector<LayoutMember> m_children;
 	std::vector<Pin> m_ioPins;
 	int m_numArguments = 0;
 	int m_numInternal = 0;
-	LayoutCallback* m_callback = nullptr;
+	CircuitCallback* m_callback = nullptr;
+};
+
+class LayoutView
+{
+public:
+	
+private:
+	LayoutData* m_data = nullptr;
+	Core* m_core = nullptr;
 };
 
 }

@@ -13,7 +13,7 @@ public:
 	Node() noexcept = default;
 
 	explicit Node(int data) noexcept;
-	explicit Node(LayoutCallback* function) noexcept;
+	explicit Node(CircuitCallback* function) noexcept;
 	explicit Node(Bus signal) noexcept;
 
 	Node& operator=(int data) noexcept;
@@ -39,7 +39,7 @@ public:
 private:
 	union
 	{
-		LayoutCallback* fn = nullptr;
+		CircuitCallback* fn = nullptr;
 		int i;
 		Bus b;
 	} m_data;

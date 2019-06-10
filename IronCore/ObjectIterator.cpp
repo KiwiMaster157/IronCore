@@ -21,7 +21,7 @@ ObjectIterator::operator bool() const noexcept
 ObjectIterator& ObjectIterator::operator++()
 {
 	if (!*this)
-		throw std::logic_error("iron::ObjectIterator::operator++ index exceeds data");
+		throw std::runtime_error("iron::ObjectIterator::operator++ index exceeds data");
 	m_count++;
 	m_position += int(m_begin[m_position + ControlOffsets::TotalSize]);
 	return *this;
@@ -30,7 +30,7 @@ ObjectIterator& ObjectIterator::operator++()
 ObjectIterator& ObjectIterator::operator--()
 {
 	if (!*this)
-		throw std::logic_error("iron::ObjectIterator::operator-- negative index");
+		throw std::runtime_error("iron::ObjectIterator::operator-- negative index");
 	m_count++;
 	m_position -= int(m_begin[m_position + ControlOffsets::PreviousSize]);
 	return *this;

@@ -11,8 +11,9 @@ enum ControlOffsets
 	OutputsOffset,
 	TotalSize,
 	PreviousSize,
+	Count,
 	//No longer in Control Block
-	ArgumentsBegin
+	ArgumentsBegin = Count
 };
 
 }

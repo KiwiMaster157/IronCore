@@ -11,7 +11,7 @@ Node::Node(int data) noexcept
 	m_data.i = data;
 }
 
-Node::Node(LayoutCallback* function) noexcept
+Node::Node(CircuitCallback* function) noexcept
 {
 	m_data.fn = function;
 }
