@@ -147,6 +147,7 @@
     <ClCompile Include="ObjectIterator.cpp" />
     <ClCompile Include="ObjectView.cpp" />
     <ClCompile Include="Part.cpp" />
+    <ClCompile Include="PrimaryCircuit.cpp" />
     <ClCompile Include="Simulation.cpp" />
   </ItemGroup>
   <ItemGroup>

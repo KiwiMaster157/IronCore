@@ -10,25 +10,9 @@ class PrimaryCircuit : public Circuit
 {
 public:
 
-	virtual Circuit::Type getType() const noexcept override final
-	{
-		return Circuit::Type::Primary;
-	}
+	virtual Circuit::Type getType() const noexcept override final;
 
-	virtual int totalSize(const Part& part) const noexcept override final
-	{
-		int numOutput = 0;
-		for (int i = 0; i < pinCount(part); i++)
-		{
-			if (pinIsOutput(part, i))
-			{
-				numOutput++;
-			}
-		}
-
-		return numOutput + pinCount(part) + numInternal(part)
-			+ numArguments(part) + ControlOffsets::Count;
-	}
+	virtual int totalSize(const Part& part) const noexcept override final;
 };
 
 }

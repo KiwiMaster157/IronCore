@@ -21,6 +21,12 @@ Bus& Bus::operator^=(Bus signal) noexcept
 	return *this;
 }
 
+//static
+short Bus::require(short width) noexcept
+{
+	return 1 + (width - 1) / 32;
+}
+
 Bus operator~(Bus signal) noexcept
 {
 	Bus retval;

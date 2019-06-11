@@ -83,6 +83,9 @@
     <ClCompile Include="CompositeCircuit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PrimaryCircuit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Object Memory.txt">
