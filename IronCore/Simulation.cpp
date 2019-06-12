@@ -3,6 +3,7 @@
 #include "FactorySegment.h"
 #include "ObjectView.h"
 #include "ObjectIterator.h"
+#include "Part.h"
 
 #include <stdexcept>
 
@@ -87,9 +88,9 @@ Simulation Simulation::makeSimulation(const Part& root, bool kickStart)
 {
 	Simulation retval;
 
-	retval.m_objectData.reserve(pt.totalSize());
+	retval.m_objectData.reserve(root.totalSize());
 
-	root.simulate(pt, FactorySegment(retval.m_objectData.data(), retval.nodeCount()));
+	root.simulate(FactorySegment(retval.m_objectData.data(), retval.nodeCount()));
 
 	if (kickStart)
 	{

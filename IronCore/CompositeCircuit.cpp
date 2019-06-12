@@ -15,7 +15,7 @@ int CompositeCircuit::totalSize(const Part& part) const noexcept
 		return m_sizeCache;
 
 	m_sizeCache = ControlOffsets::Count + 2 * m_pins.size();
-	for (int i = 0; i < m_parts.size(); i++)
+	for (int i = 0; i < static_cast<int>(m_parts.size()); i++)
 	{
 		m_sizeCache += m_parts[i].totalSize();
 	}
