@@ -3,6 +3,9 @@
 namespace iron
 {
 
+namespace ControlOffsets
+{
+
 enum ControlOffsets
 {
 	Callback,
@@ -10,10 +13,10 @@ enum ControlOffsets
 	InputsOffset,
 	OutputsOffset,
 	TotalSize,
-	PreviousSize,
 	Count,
 	//No longer in Control Block
 	ArgumentsBegin = Count
 };
 
+}
 }

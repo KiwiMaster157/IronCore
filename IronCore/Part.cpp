@@ -15,6 +15,8 @@ Part::Part(const Circuit* theCircuit, Point2i theLocation, Rotation theOrientati
 	m_arguments.resize(numArguments());
 }
 
+#pragma region Forwarding
+
 CircuitCallback* Part::getUpdate() const
 {
 	m_validate();
@@ -73,6 +75,14 @@ int Part::numInternal() const
 	m_validate();
 	return m_circuit->numInternal(*this);
 }
+
+void Part::simulate(FactorySegment factory) const
+{
+	m_validate();
+	m_circuit->simulate(*this, factory);
+}
+
+#pragma endregion
 
 Point2i Part::getPosition() const noexcept
 {

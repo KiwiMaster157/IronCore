@@ -127,7 +127,7 @@
     <ClInclude Include="Bus.h" />
     <ClInclude Include="Circuit.h" />
     <ClInclude Include="CompositeCircuit.h" />
-    <ClInclude Include="Core.h" />
+    <ClInclude Include="FactorySegment.h" />
     <ClInclude Include="Layout.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="ObjectControl.h" />
@@ -140,8 +140,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bus.cpp" />
-    <ClCompile Include="Circuit.cpp" />
     <ClCompile Include="CompositeCircuit.cpp" />
+    <ClCompile Include="FactorySegment.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="ObjectIterator.cpp" />

@@ -11,7 +11,7 @@ namespace iron
 ObjectView::ObjectView(Node* data, Simulation* simulation, int offset)
 	: m_begin(data), m_simulation(simulation), m_position(offset)
 {
-	if (offset >= simulation->nodeSize())
+	if (offset >= simulation->nodeCount())
 		throw std::logic_error("iron::ObjectView::ObjectView: index exceeds data");
 }
 

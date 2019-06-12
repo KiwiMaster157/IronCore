@@ -23,6 +23,7 @@ public:
 	explicit operator Bus() const noexcept;
 
 	void operator()(const ObjectView& object); //CANNOT be noexcept
+	CircuitCallback* getFunction() const noexcept;
 
 	//Integer operations
 	Node& operator+=(int data) noexcept;

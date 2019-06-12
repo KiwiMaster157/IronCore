@@ -1,4 +1,6 @@
 #include "Simulation.h"
+
+#include "FactorySegment.h"
 #include "ObjectView.h"
 #include "ObjectIterator.h"
 
@@ -18,19 +20,19 @@ SimulationEvent::SimulationEvent(int position, bool isAbsolute)
 	absolute = isAbsolute;
 }
 
-int Simulation::nodeSize() const noexcept
+int Simulation::nodeCount() const noexcept
 {
 	return m_objectData.size();
 }
 
-int Simulation::objectSize() const noexcept
+int Simulation::objectCount() const noexcept
 {
 	if (m_numObjects >= 0)
 		return m_numObjects;
 
 	m_numObjects = 0;
 
-	ObjectIterator iterator(m_objectData.data(), m_objectData.size());
+	ObjectIterator iterator(m_objectData.data(), nodeCount());
 
 	while (iterator)
 	{
@@ -71,12 +73,36 @@ ObjectView Simulation::m_getObject(SimulationEvent e)
 	if (e.absolute)
 		return ObjectView(m_objectData.data(), this, e.object);
 	
-	ObjectIterator iterator(m_objectData.data(), m_objectData.size());
+	ObjectIterator iterator(m_objectData.data(), nodeCount());
 
 	for (int i = 0; i < e.object; i++)
 		++iterator;
 
 	return ObjectView(m_objectData.data(), this, iterator.getPosition());
+}
+
+//static
+//default arg: kickStart = false
+Simulation Simulation::makeSimulation(const Part& root, bool kickStart)
+{
+	Simulation retval;
+
+	retval.m_objectData.reserve(pt.totalSize());
+
+	root.simulate(pt, FactorySegment(retval.m_objectData.data(), retval.nodeCount()));
+
+	if (kickStart)
+	{
+		ObjectIterator iterator(retval.m_objectData.data(), retval.nodeCount());
+
+		while (iterator)
+		{
+			retval.pushEvent(SimulationEvent(iterator.getPosition(), true));
+			++iterator;
+		}
+	}
+	
+	return retval;
 }
 
 }

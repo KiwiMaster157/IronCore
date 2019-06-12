@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Utility.h"
+#include "FactorySegment.h"
 
 #include <stdexcept>
 #include <string>
@@ -77,6 +78,8 @@ public:
 
 	/// Determines how many internal values the part has.
 	virtual int numInternal(const Part& part) const noexcept = 0;
+
+	virtual void simulate(const Part& part, FactorySegment factory) const = 0;
 #pragma endregion
 };
 

@@ -1,12 +1,15 @@
 #pragma once
 
 #include "Node.h"
+#include "Circuit.h"
 
 #include <vector>
 #include <queue>
 
 namespace iron
 {
+
+class Part;
 
 class SimulationEvent
 {
@@ -29,11 +32,13 @@ private:
 class Simulation
 {
 public:
-	
+
+	static Simulation makeSimulation(const Part& root, bool kickStart = false);
+
 	/// Returns the number of Nodes in m_objectData.
-	int nodeSize() const noexcept;
+	int nodeCount() const noexcept;
 	
-	int objectSize() const noexcept;
+	int objectCount() const noexcept;
 
 	/// Returns true if the event queue is empty.
 	bool empty() const noexcept;

@@ -27,26 +27,10 @@ ObjectIterator& ObjectIterator::operator++()
 	return *this;
 }
 
-ObjectIterator& ObjectIterator::operator--()
-{
-	if (!*this)
-		throw std::runtime_error("iron::ObjectIterator::operator-- negative index");
-	m_count++;
-	m_position -= int(m_begin[m_position + ControlOffsets::PreviousSize]);
-	return *this;
-}
-
 ObjectIterator ObjectIterator::operator++(int)
 {
 	ObjectIterator retval = *this;
 	++(*this);
-	return retval;
-}
-
-ObjectIterator ObjectIterator::operator--(int)
-{
-	ObjectIterator retval = *this;
-	--(*this);
 	return retval;
 }
 

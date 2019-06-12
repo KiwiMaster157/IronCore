@@ -50,6 +50,11 @@ void Node::operator()(const ObjectView& object)
 	m_data.fn(object);
 }
 
+CircuitCallback* Node::getFunction() const noexcept
+{
+	return m_data.fn;
+}
+
 Node& Node::operator+=(int data) noexcept
 {
 	m_data.i += data;

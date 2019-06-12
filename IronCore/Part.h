@@ -1,5 +1,6 @@
 #pragma once
 
+#include "FactorySegment.h"
 #include "Utility.h"
 
 #include <vector>
@@ -17,6 +18,8 @@ public:
 	explicit Part(const Circuit* theCircuit,
 		Point2i theLocation = Point2i(0, 0),
 		Rotation theOrientation = Rotation::None);
+
+#pragma region Forwarding
 
 	CircuitCallback* getUpdate() const;
 
@@ -38,6 +41,10 @@ public:
 
 	int numInternal() const;
 	
+	void simulate(FactorySegment factory) const;
+
+#pragma endregion
+
 	Point2i getPosition() const noexcept;
 
 	Rotation getRotation() const noexcept;
