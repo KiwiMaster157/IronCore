@@ -162,6 +162,8 @@ private:
 
 	int m_outputObject(int index) const noexcept;
 	int m_outputDestination(int index) const noexcept;
+
+	bool m_isObjectBlock() const noexcept;
 };
 
 }

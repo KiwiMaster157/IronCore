@@ -35,7 +35,7 @@ FactorySegment FactorySegment::postSegment(int length)
 
 bool FactorySegment::isObject() const noexcept
 {
-	return m_size >= ControlOffsets::Count;
+	return m_isObjectBlock() && m_size >= m_nextObjectPosition();
 }
 
 int FactorySegment::size() const noexcept
@@ -68,7 +68,7 @@ int FactorySegment::numOutputs() const noexcept
 {
 	if (!isObject())
 		return FactorySegment::npos;
-	return m_nextObjectPosition() - m_outputsPosition();
+	return (m_nextObjectPosition() - m_outputsPosition()) / 2;
 }
 
 int FactorySegment::objectSize() const noexcept
@@ -84,8 +84,9 @@ int FactorySegment::objectSize() const noexcept
 
 Node& FactorySegment::operator[](int index)
 {
-	return const_cast<Node&>(
-		const_cast<const FactorySegment&>(*this)[index]);
+	if (index < 0 || index >= m_size)
+		throw std::invalid_argument("Invalid index for FactorySegment");
+	return m_ptr[index];
 }
 
 const Node& FactorySegment::operator[](int index) const
@@ -97,7 +98,7 @@ const Node& FactorySegment::operator[](int index) const
 
 CircuitCallback* FactorySegment::getCallback() const noexcept
 {
-	if (m_size <= 0)
+	if (!isObject())
 		return nullptr;
 	return m_ptr->getFunction();
 }
@@ -111,23 +112,23 @@ int FactorySegment::getArgument(int index) const
 
 Node FactorySegment::getInternal(int index) const
 {
-	if (index < 0 || index >= numArgs())
+	if (index < 0 || index >= numInternals())
 		throw std::invalid_argument("iron::FactorySegment::getInternal invalid index.");
 	return operator[](m_internalsPosition() + index);
 }
 
 int FactorySegment::getOutputObject(int index) const
 {
-	if (index < 0 || index >= numArgs())
+	if (index < 0 || index >= numOutputs())
 		throw std::invalid_argument("iron::FactorySegment::getOutputObject invalid index.");
-	return int(operator[](m_outputsPosition() + 2 * index));
+	return int(operator[](m_outputObject(index)));
 }
 
 int FactorySegment::getOutputDestination(int index) const
 {
-	if (index < 0 || index >= numArgs())
+	if (index < 0 || index >= numOutputs())
 		throw std::invalid_argument("iron::FactorySegment::getOutputDestination invalid index.");
-	return int(operator[](m_outputsPosition() + 2 * index + 1));
+	return int(operator[](m_outputDestination(index)));
 }
 
 #pragma endregion
@@ -137,7 +138,7 @@ int FactorySegment::getOutputDestination(int index) const
 FactorySegment& FactorySegment::setControlBlock(int numArguments,
 	int numInternals, int numInputs, int numOutputs)
 {
-	if (!isObject())
+	if (!m_isObjectBlock())
 		throw std::domain_error("FactorySegment is not an object.");
 	int total = numArguments;
 	m_ptr[ControlOffsets::InternalsOffset] = total;
@@ -148,7 +149,7 @@ FactorySegment& FactorySegment::setControlBlock(int numArguments,
 	total += 2 * numOutputs;
 	m_ptr[ControlOffsets::TotalSize] = total;
 	if (total > m_size)
-		throw std::domain_error("Control Block totalSize excedes FactorySegment.");
+		throw std::domain_error("Control Block indicates totalSize excedes FactorySegment.");
 	return *this;
 }
 
@@ -252,6 +253,11 @@ int FactorySegment::m_outputObject(int index) const noexcept
 int FactorySegment::m_outputDestination(int index) const noexcept
 {
 	return int(m_ptr[m_outputsPosition() + 2 * index + 1]);
+}
+
+bool FactorySegment::m_isObjectBlock() const noexcept
+{
+	return m_size >= ControlOffsets::Count;
 }
 
 #pragma endregion
